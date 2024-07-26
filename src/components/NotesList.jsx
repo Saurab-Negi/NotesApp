@@ -20,31 +20,28 @@ const NotesList = ({
 
 	return (
 		<div className='notes-list'>
-			{/* AddNote component first */}
-			<AddNote handleAddNote={handleAddNote} />
+			
+			<div className="note-items">
+				{/* AddNote component first */}
+				<AddNote handleAddNote={handleAddNote} />
 
-			{/* Render notes after AddNote */}
-			{notes.map((note) => (
-				<Note
-					key={note.id}
-					id={note.id}
-					text={note.text}
-					date={note.date}
-					handleDeleteNote={handleDeleteNote}
-					handleUpdateNote={handleUpdateNote}
-					isEditing={editNoteId === note.id}
-					setEditNoteId={setEditNoteId}
-				/>
-			))}
+				{/* Render notes after AddNote */}
+				{notes.map((note) => (
+					<Note
+						key={note.id}
+						id={note.id}
+						text={note.text}
+						date={note.date}
+						handleDeleteNote={handleDeleteNote}
+						handleUpdateNote={handleUpdateNote}
+						isEditing={editNoteId === note.id}
+						setEditNoteId={setEditNoteId}
+					/>
+				))}
+			</div>
 
 			{/* Pagination Controls */}
 			<div className='pagination'>
-				<button
-					onClick={() => handlePageChange(currentPage - 1)}
-					disabled={currentPage === 1}
-				>
-					Previous
-				</button>
 				{pageNumbers.map((number) => (
 					<button
 						key={number}
@@ -54,13 +51,8 @@ const NotesList = ({
 						{number}
 					</button>
 				))}
-				<button
-					onClick={() => handlePageChange(currentPage + 1)}
-					disabled={currentPage === pageNumbers.length}
-				>
-					Next
-				</button>
 			</div>
+			
 		</div>
 	);
 };

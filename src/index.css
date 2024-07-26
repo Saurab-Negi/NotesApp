@@ -1,15 +1,6 @@
 body {
 	margin: 0;
-	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI',
-		'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans',
-		'Droid Sans', 'Helvetica Neue', sans-serif;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
-}
-
-code {
-	font-family: source-code-pro, Menlo, Monaco, Consolas,
-		'Courier New', monospace;
+	font-family: sans-serif;
 }
 
 .header {
@@ -19,7 +10,7 @@ code {
 }
 
 .dark-mode {
-	background-color: black;
+	background-color: rgb(38, 38, 38);
 }
 
 .dark-mode h1 {
@@ -27,25 +18,26 @@ code {
 }
 
 .container {
+	display: flex;
+	flex-direction: column;
 	max-width: 960px;
-	margin-right: auto;
-	margin-left: auto;
+	margin: auto;
 	padding-right: 15px;
 	padding-left: 15px;
-	min-height: 100vh;
+	height: 100vh;
 }
 
-.notes-list {
+.note-items{
 	display: grid;
 	grid-gap: 1rem;
 	grid-template-columns: repeat(
 		auto-fill,
-		minmax(250px, 1fr)
+		minmax(300px, 1fr)
 	);
 }
 
 .note.new {
-	background-color: #67d7cc;
+	background-color: #a5fff6;
 }
 
 textarea {
@@ -59,15 +51,11 @@ textarea:focus {
 }
 
 .save {
-	background-color: #e1e1e1;
+	cursor: pointer;
+	background-color: #b6c5ff;
 	border: none;
 	border-radius: 15px;
 	padding: 5px 10px 5px 10px;
-}
-
-.save:hover {
-	background-color: #ededed;
-	cursor: pointer;
 }
 
 .note {
@@ -79,6 +67,10 @@ textarea:focus {
 	flex-direction: column;
 	justify-content: space-between;
 	white-space: pre-wrap;
+}
+
+.note:hover{
+	box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 }
 
 .note-footer {
@@ -127,13 +119,16 @@ textarea:focus {
 .pagination {
 	display: flex;
 	justify-content: center;
-	margin-top: 1em;
+	margin-top: 1rem;
 }
 
 .pagination button {
-	margin: 0 0.2em;
-	padding: 0.5em 1em;
+	margin: 6px;
+	padding: 5px;
+	font-size: 12px;
 	cursor: pointer;
+	border-radius: 5px;
+	border: none;
 }
 
 .pagination .active {
