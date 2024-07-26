@@ -27,6 +27,7 @@ const Note = ({ id, text, date, handleDeleteNote, handleUpdateNote, isEditing, s
 			)}
 			<div className='note-footer'>
 				<small>{date}</small>
+				<div className="edit-delete-icon">
 				{!isEditing && (
 					<>
 						<MdEdit
@@ -41,6 +42,8 @@ const Note = ({ id, text, date, handleDeleteNote, handleUpdateNote, isEditing, s
 						/>
 					</>
 				)}
+				</div>
+
 			</div>
 		</div>
 	);

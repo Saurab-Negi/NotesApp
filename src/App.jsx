@@ -6,7 +6,6 @@ import Header from './components/Header';
 
 const App = () => {
 	const [notes, setNotes] = useState(() => {
-		// Retrieve saved notes from local storage only once on initial render
 		console.log("Retrieving notes from localStorage...");
 		const savedNotes = localStorage.getItem('react-notes-app-data');
 		if (savedNotes) {
@@ -25,8 +24,9 @@ const App = () => {
 	const [searchText, setSearchText] = useState('');
 	const [darkMode, setDarkMode] = useState(false);
 	const [editNoteId, setEditNoteId] = useState(null);
+	const [currentPage, setCurrentPage] = useState(1);
+	const notesPerPage = 5;
 
-	// Save notes to local storage whenever the notes state changes
 	useEffect(() => {
 		console.log("Saving notes to localStorage:", notes);
 		localStorage.setItem('react-notes-app-data', JSON.stringify(notes));
@@ -37,9 +37,10 @@ const App = () => {
 		const newNote = {
 			id: nanoid(),
 			text,
-			date: date.toLocaleString(), // Includes both date and time
+			date: date.toLocaleString(),
 		};
-		setNotes((prevNotes) => [...prevNotes, newNote]);
+		setNotes((prevNotes) => [newNote, ...prevNotes]); // Add new note at the start
+		setCurrentPage(1); // Reset to first page
 	};
 
 	const deleteNote = (id) => {
@@ -55,20 +56,34 @@ const App = () => {
 		setEditNoteId(null);
 	};
 
+	// Pagination Logic
+	const indexOfLastNote = currentPage * notesPerPage;
+	const indexOfFirstNote = indexOfLastNote - notesPerPage;
+	const filteredNotes = notes.filter((note) =>
+		note.text.toLowerCase().includes(searchText.toLowerCase())
+	);
+	const currentNotes = filteredNotes.slice(indexOfFirstNote, indexOfLastNote);
+
+	const handlePageChange = (pageNumber) => {
+		setCurrentPage(pageNumber);
+	};
+
 	return (
 		<div className={`${darkMode && 'dark-mode'}`}>
 			<div className='container'>
 				<Header handleToggleDarkMode={setDarkMode} />
 				<Search handleSearchNote={setSearchText} />
 				<NotesList
-					notes={notes.filter((note) =>
-						note.text.toLowerCase().includes(searchText.toLowerCase())
-					)}
+					notes={currentNotes}
 					handleAddNote={addNote}
 					handleDeleteNote={deleteNote}
 					handleUpdateNote={updateNote}
 					editNoteId={editNoteId}
 					setEditNoteId={setEditNoteId}
+					currentPage={currentPage}
+					notesPerPage={notesPerPage}
+					totalNotes={filteredNotes.length}
+					handlePageChange={handlePageChange}
 				/>
 			</div>
 		</div>
