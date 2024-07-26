@@ -20,7 +20,7 @@ const Note = ({ id, text, date, handleDeleteNote, handleUpdateNote, isEditing, s
 						value={editText}
 						onChange={(e) => setEditText(e.target.value)}
 					/>
-					<button onClick={handleSaveClick}>save</button>
+					<button className='save' style={{marginBottom: 10, width: 50}} onClick={handleSaveClick}>save</button>
 				</>
 			) : (
 				<span>{text}</span>

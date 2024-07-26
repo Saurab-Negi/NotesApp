@@ -9,14 +9,6 @@ body {
 	justify-content: space-between;
 }
 
-.dark-mode {
-	background-color: rgb(38, 38, 38);
-}
-
-.dark-mode h1 {
-	color: white;
-}
-
 .container {
 	display: flex;
 	flex-direction: column;
@@ -24,7 +16,7 @@ body {
 	margin: auto;
 	padding-right: 15px;
 	padding-left: 15px;
-	height: 100vh;
+	height: 100%;
 }
 
 .note-items{
@@ -119,7 +111,7 @@ textarea:focus {
 .pagination {
 	display: flex;
 	justify-content: center;
-	margin-top: 1rem;
+	margin: 1rem;
 }
 
 .pagination button {

@@ -22,10 +22,9 @@ const App = () => {
 	});
 
 	const [searchText, setSearchText] = useState('');
-	const [darkMode, setDarkMode] = useState(false);
 	const [editNoteId, setEditNoteId] = useState(null);
 	const [currentPage, setCurrentPage] = useState(1);
-	const notesPerPage = 5;
+	const notesPerPage = 8;
 
 	useEffect(() => {
 		console.log("Saving notes to localStorage:", notes);
@@ -39,21 +38,33 @@ const App = () => {
 			text,
 			date: date.toLocaleString(),
 		};
-		setNotes((prevNotes) => [newNote, ...prevNotes]); // Add new note at the start
-		setCurrentPage(1); // Reset to first page
+		setNotes((prevNotes) => {
+			const updatedNotes = [newNote, ...prevNotes];
+			return sortNotesByDate(updatedNotes);
+		});
+		setCurrentPage(1);
 	};
 
 	const deleteNote = (id) => {
-		setNotes((prevNotes) => prevNotes.filter((note) => note.id !== id));
+		setNotes((prevNotes) => {
+			const updatedNotes = prevNotes.filter((note) => note.id !== id);
+			return sortNotesByDate(updatedNotes);
+		});
 	};
 
 	const updateNote = (id, newText) => {
-		setNotes((prevNotes) =>
-			prevNotes.map((note) =>
-				note.id === id ? { ...note, text: newText } : note
-			)
-		);
+		const date = new Date();
+		setNotes((prevNotes) => {
+			const updatedNotes = prevNotes.map((note) =>
+				note.id === id ? { ...note, text: newText, date: date.toLocaleString() } : note
+			);
+			return sortNotesByDate(updatedNotes);
+		});
 		setEditNoteId(null);
+	};
+
+	const sortNotesByDate = (notes) => {
+		return notes.slice().sort((a, b) => new Date(b.date) - new Date(a.date));
 	};
 
 	// Pagination Logic
@@ -69,23 +80,21 @@ const App = () => {
 	};
 
 	return (
-		<div className={`${darkMode && 'dark-mode'}`}>
-			<div className='container'>
-				<Header handleToggleDarkMode={setDarkMode} />
-				<Search handleSearchNote={setSearchText} />
-				<NotesList
-					notes={currentNotes}
-					handleAddNote={addNote}
-					handleDeleteNote={deleteNote}
-					handleUpdateNote={updateNote}
-					editNoteId={editNoteId}
-					setEditNoteId={setEditNoteId}
-					currentPage={currentPage}
-					notesPerPage={notesPerPage}
-					totalNotes={filteredNotes.length}
-					handlePageChange={handlePageChange}
-				/>
-			</div>
+		<div className='container'>
+			<Header />
+			<Search handleSearchNote={setSearchText} />
+			<NotesList
+				notes={currentNotes}
+				handleAddNote={addNote}
+				handleDeleteNote={deleteNote}
+				handleUpdateNote={updateNote}
+				editNoteId={editNoteId}
+				setEditNoteId={setEditNoteId}
+				currentPage={currentPage}
+				notesPerPage={notesPerPage}
+				totalNotes={filteredNotes.length}
+				handlePageChange={handlePageChange}
+			/>
 		</div>
 	);
 };
