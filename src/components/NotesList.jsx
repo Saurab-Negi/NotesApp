@@ -20,7 +20,6 @@ const NotesList = ({
 
 	return (
 		<div className='notes-list'>
-			
 			<div className="note-items">
 				{/* AddNote component first */}
 				<AddNote handleAddNote={handleAddNote} />
@@ -30,6 +29,7 @@ const NotesList = ({
 					<Note
 						key={note.id}
 						id={note.id}
+						title={note.title}
 						text={note.text}
 						date={note.date}
 						handleDeleteNote={handleDeleteNote}
@@ -52,7 +52,6 @@ const NotesList = ({
 					</button>
 				))}
 			</div>
-			
 		</div>
 	);
 };

@@ -32,13 +32,13 @@ body {
 	background-color: #a5fff6;
 }
 
-textarea {
+input, textarea {
 	border: none;
 	resize: none;
 	background-color: transparent;
 }
 
-textarea:focus {
+input:focus, textarea:focus {
 	outline: none;
 }
 
@@ -60,9 +60,27 @@ textarea:focus {
 	justify-content: space-between;
 	white-space: pre-wrap;
 }
+ .note h3{
+	font-size: 1rem;
+ }
+
+ .note p{
+	font-size: 0.85rem;
+ }
 
 .note:hover{
 	box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+
+.note-top{
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	gap: 1rem;
+}
+
+h3, p{
+	margin: 0;
 }
 
 .note-footer {
